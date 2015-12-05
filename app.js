@@ -63,7 +63,8 @@ app.get("/documents", function(req,res){
 })
 
 app.get("/categories", function(req, res){
-	var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/categories";
+	var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/categories"; //old db
+	//var url = "https://a3efd280-ed01-49a4-b2dd-dc234276c10e-bluemix.cloudant.com/data/categories"; //new db
 	request(url, function(error, response, body) {
 		res.send(body);
 	});
@@ -71,14 +72,27 @@ app.get("/categories", function(req, res){
 })
 
 app.post("/query", function(req, res) {
-	//var url = 
+	var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/_find"
+	var options = {
+		"selector": {
+				"value": {"$exists": true}
+			},
+		"fields": [
+			"value"
+	  	]
+	}
+	console.log(JSON.stringify(options))
+	var options_string = JSON.stringify(options)
+	request.post(url, options, function(err, response, body) {
+		res.send(body)
+	})
 })
 
 
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
-
+	
 	// print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
+  	console.log("server starting on " + appEnv.url);
 });
