@@ -76,14 +76,8 @@ app.post("/query", function(req, res) {
   //var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/_find"; // Old db
   var url = cloudant.config.url + "/data/_find"; // Awesome way
   var options = {
-    "selector": {
-      "value": {"$exists": true}
-    },
-    "fields": [
-      "value"
-    ]
+    "selector": req.body
   };
-  console.log(JSON.stringify(options));
   var options_string = JSON.stringify(options);
   request({
     "url": url,
@@ -96,8 +90,6 @@ app.post("/query", function(req, res) {
     res.send(body);
   });
 });
-
-
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {

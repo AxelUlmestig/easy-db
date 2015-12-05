@@ -52,7 +52,7 @@ app.controller('controller', function($scope, $http) {
 		$http.post(url, query)
 		.then(function(response){
 			$scope.query_result = response;
-			console.log(response);
+			console.log(response.data);
 		}, function(error){});
 	};
 
