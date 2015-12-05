@@ -45,49 +45,56 @@ app.post("/store-data", function(req, res){
   /*Store to cloudant*/
   var datadb = cloudant.db.use('data');
   datadb.insert(data, function(err, body, header) {
-      if (err) {
-        return console.log('[data.insert]', err.message);
-      }
+    if (err) {
+      return console.log('[data.insert]', err.message);
+    }
 
-      console.log('You have inserted the data.');
-      console.log(body);
-      res.send(body);
-    });
+    console.log('You have inserted the data.');
+    console.log(body);
+    res.send(body);
+  });
 });
 
 app.get("/documents", function(req,res){
 
   var datadb = cloudant.db.use('data');
-   /*Hämta skit*/
+  /*Hämta skit*/
 
 });
 
 app.get("/categories", function(req, res){
-	//var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/categories"; //old db
-	//var url = "https://a3efd280-ed01-49a4-b2dd-dc234276c10e-bluemix.cloudant.com/data/categories"; //new db
+  //var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/categories"; //old db
+  //var url = "https://a3efd280-ed01-49a4-b2dd-dc234276c10e-bluemix.cloudant.com/data/categories"; //new db
   var url = cloudant.config.url + "/data/categories"; // Awesome way
-	request(url, function(error, response, body) {
-		res.send(body);
-	});
-	//res.send({categories: ["footsize"]})
+  request(url, function(error, response, body) {
+    res.send(body);
+  });
+  //res.send({categories: ["footsize"]})
 });
 
 app.post("/query", function(req, res) {
-	//var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/_find"; // Old db
+  //var url = "https://1f44b41b-80fc-4a8c-85bf-f1dca83d75f5-bluemix.cloudant.com/data/_find"; // Old db
   var url = cloudant.config.url + "/data/_find"; // Awesome way
-	var options = {
-		"selector": {
-				"value": {"$exists": true}
-			},
-		"fields": [
-			"value"
-	  	]
-	};
-	console.log(JSON.stringify(options));
-	var options_string = JSON.stringify(options);
-	request.post(url, options, function(err, response, body) {
-		res.send(body);
-	});
+  var options = {
+    "selector": {
+      "value": {"$exists": true}
+    },
+    "fields": [
+      "value"
+    ]
+  };
+  console.log(JSON.stringify(options));
+  var options_string = JSON.stringify(options);
+  request({
+    "url": url,
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(options) //Set the body as a string
+  }, function(err, response, body) {
+    res.send(body);
+  });
 });
 
 
@@ -95,6 +102,6 @@ app.post("/query", function(req, res) {
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
 
-	// print a message when the server starts listening
-  	console.log("server starting on " + appEnv.url);
+  // print a message when the server starts listening
+  console.log("server starting on " + appEnv.url);
 });

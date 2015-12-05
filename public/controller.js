@@ -7,11 +7,11 @@ app.controller('controller', function($scope, $http) {
 	$scope.values = [];
 	$scope.query_response = "";
 
-	$scope.send = function(category, value) {
+	$scope.send = function() {
 		var obj = {};
 		for(var i = 0; i < $scope.values.length; i++) {
-			var category = $scope.used_categories[i] // category is already defined
-			var value = $scope.values[i] // value is already defined
+			var category = $scope.used_categories[i]; // category is already defined
+			var value = $scope.values[i]; // value is already defined
 			if(category && value) {
 				obj[category] = value;
 			}
@@ -47,6 +47,7 @@ app.controller('controller', function($scope, $http) {
 
 	$scope.query = function(query) {
 		console.log("query called");
+		console.log(query);
 		var url = "/query";
 		$http.post(url, query)
 		.then(function(response){
