@@ -3,6 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: eu-gb.mybluemix.net
-  name: KitsFooCafeApp
-  host: kitsfoocafeapp
+  name: easy-db 
+  host: easy-db 
   disk_quota: 1024M
