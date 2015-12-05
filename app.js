@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 // Load the Cloudant library.
 var Cloudant = require('cloudant');
-var cloudantService = appEnv.getService("Cloudant NoSQL DB-lh");
+var cloudantService = appEnv.getService("Cloudant NoSQL DB-8c");
 var me = cloudantService.credentials.username; // Set this to your own account
 var password = cloudantService.credentials.password;
 
@@ -68,6 +68,10 @@ app.get("/categories", function(req, res){
 		res.send(body);
 	});
 	//res.send({categories: ["footsize"]})
+})
+
+app.post("/query", function(req, res) {
+	//var url = 
 })
 
 
