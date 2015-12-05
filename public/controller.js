@@ -5,6 +5,7 @@ app.controller('controller', function($scope, $http) {
 	$scope.available_categories = ['ost', 'kex', 'bläckfisk']
 	$scope.used_categories = []
 	$scope.values = []
+	$scope.query_response = ""
 
 	$scope.send = function(category, value) {
 		var obj = {}
@@ -16,6 +17,7 @@ app.controller('controller', function($scope, $http) {
 			}
 		}
 		console.log(obj)
+		$scope.query(obj)
 	} 
 
 	$scope.range = function(lower, upper) {
@@ -41,6 +43,16 @@ app.controller('controller', function($scope, $http) {
 		}, function(error){
 
 		});
+	}
+
+	$scope.query = function(query) {
+		console.log("query called")
+		var url = "/query"
+		$http.post(url, query)
+		.then(function(response){
+			$scope.query_result = response
+			console.log(response)
+		}, function(error){})
 	}
 
 	$scope.get_categories()
