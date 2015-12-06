@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-    <script src="controller.js"></script>
-    <script src="angucomplete-alt.min.js"></script>
-  </head>
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script src="controller.js"></script>
+  <script src="angucomplete-alt.min.js"></script>
+</head>
 
-  <body ng-app="tracing" ng-controller="controller">
-	<form ng_submit="send()">
-		<div ng-repeat="n in range(0, nbr_of_categories)">
-			<select ng-model="used_categories[n]" ng-options="opt for opt in available_categories"></select>
-			:<input type="text" name="value" ng-model="values[n]" value={{values[0]}}/><br>
-		</div>
-	</form>
-	<button ng-click="add_field()">Add field</button><br>
-	<button ng-click="send()">Send</button>
-	<!--angucomplete id="ex1" selected-objects="suggested_object" title_field="title"></angucomplete-->
-  </body>
+<body ng-app="tracing" ng-controller="controller">
+  <form ng_submit="send()">
+    <div ng-repeat="n in range(0, nbr_of_categories)">
+      <select ng-model="used_categories[n]" ng-options="opt for opt in available_categories"></select>
+      :<input type="text" name="value" ng-model="values[n]" value={{values[0]}}/><br>
+    </div>
+  </form>
+  <button ng-click="add_field()">Add field</button><br>
+  <button ng-click="send()">Send</button>
+
+  <table border="1" ng-hide="!query_result">
+    <tr ng-repeat="item in query_result">
+      <td ng-repeat="(key,val) in item">{{key}}:{{val}}</td>
+    </tr>
+  </table>
+
+  <!--angucomplete id="ex1" selected-objects="suggested_object" title_field="title"></angucomplete-->
+</body>
 
 </html>

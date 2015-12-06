@@ -51,7 +51,15 @@ app.controller('controller', function($scope, $http) {
 		var url = "/query";
 		$http.post(url, query)
 		.then(function(response){
-			$scope.query_result = response;
+			$scope.query_result = response.data.docs.map(function(item){ // maybe object??
+				var newItem = {};
+				for(var key in item){
+					if(item.hasOwnProperty(key) && key !== "_id" && key !== "_rev"){
+						newItem[key] = item[key];
+					}
+				}
+				return newItem;
+			});
 			console.log(response.data);
 		}, function(error){});
 	};
